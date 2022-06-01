@@ -12,6 +12,9 @@ using System.Text.Json;
 using MongoDB.Driver;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace HotelNoSql.Controllers
 {
@@ -30,7 +33,9 @@ namespace HotelNoSql.Controllers
 
             var allRoms = collection.Find(x => x.ime.Length > 1 ).ToList();
 
-   
+             HttpClient client = new HttpClient();
+
+
             ViewData["collection"] = allRoms;
             return View();
         }

@@ -1,0 +1,103 @@
+﻿@using System.Text.Json
+@model HotelNoSql.Models.Soba;
+
+@{
+    ViewData["Title"] = "Home Page";
+    var data = ViewData["collection"];
+    string[] banners = new string[] { "http://cdn.cnn.com/cnnnext/dam/assets/140127103345-peninsula-shanghai-deluxe-mock-up.jpg","https://thumbs.dreamstime.com/b/hotel-room-beautiful-orange-sofa-included-43642330.jpg", "https://www.bestwesternplusmeridian.com/Content/images/Queen-Room.jpg", "https://media.nomadicmatt.com/2021/hoteltips2.jpg" };
+}
+    <div class="hero-wrapper position-relative h-75">
+        <img class="position-relative" src="https://hotelub.rs/wp-content/uploads/2022/01/hotel-ub-aqua-park-1.jpg" />
+        <h1 class="position-absolute" style="top: 33%;left: 46%;font-size: 4rem;color: white;"> Hotel Raf</h1>
+    </div>
+   
+    <div class="container">
+
+        <h2 class="mt-3">Proverite zasto smo najbolji!</h2>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, whe
+            n an unknown printer took a galley of type and scrambled
+            it to make a type specimen book. It has</p>
+
+            <div class="row">
+          <div class="col-lg-4 text-center">
+            <img style="object-fit: cover" class="rounded-circle" src="https://goachronicle.com/wp-content/uploads/2021/05/BillGates.jpg" alt="Generic placeholder image" width="140" height="140">
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4 text-center">
+            <img style="object-fit: cover" class="rounded-circle" src="https://i.pinimg.com/originals/0e/4b/17/0e4b1709becc463dc0c20219205f1386.jpg" alt="Generic placeholder image" width="140" height="140">
+            <h2>Heading</h2>
+            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4 text-center">
+            <img style="object-fit: cover" class="rounded-circle" src="https://www.wired.com/wp-content/uploads/2019/01/Culture_GeeksGuide_Bezos.jpg" alt="Generic placeholder image" width="140" height="140">
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          </div><!-- /.col-lg-4 -->
+        </div>
+        <div class="row gap-3">
+            
+            <div class="col-md-12"> <h3> Lista svih dostupnih soba:</h3></div>
+            @{
+                foreach (HotelNoSql.Models.Soba item in (dynamic)data)
+                {
+                    Random rd = new Random();
+                    int rand_num = rd.Next(0,4);
+                <div class="col-md-4 my-3">
+                 <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="@banners[rand_num]" alt="hotel image">
+                  <div class="card-body">
+                    <h5 class="card-title">@item.ime</h5>
+                    <p class="card-text">@item.opis</p>
+                    <a asp-controller="Home" asp-action="RoomPage" asp-route-id="@item.id" class="btn btn-primary">Detaljnije</a>
+                  </div>
+                </div>
+                </div>
+                }
+            }
+         </div>
+         <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="500x500" style="width: 500px; height: 500px;object-fit:cover" src="https://crystalpool.rs/images/wellness/wellness-_-spa-4.jpg" data-holder-rendered="true">
+          </div>
+        </div>
+         <h2>Dodaj novu sobu:</h2>
+         @using (Html.BeginForm("NewRoom", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label class="d-block" for="ime">Ime</label>
+            @Html.TextBoxFor(m => m.ime, new{@class="w-100"})
+        </div>
+        <div class="form-group">
+            <label class="d-block" for="brojKreveta">Broj Kreveta</label>
+            @Html.TextBoxFor(m => m.brojKreveta, new{@class="w-100"})
+        </div>
+        <div class="form-group">
+            <label class="d-block" for="opis">Opis</label>
+            @Html.TextBoxFor(m => m.opis, new{@class="w-100"})
+        </div>
+            <div class="form-group">
+            <label  for="hrana">Hrana</label>
+            @Html.CheckBoxFor(m => m.Hrana)
+        </div>
+        <div class="form-group">
+            <label for="minibar">MiniBar</label>
+            @Html.CheckBoxFor(m => m.miniBar)
+        </div>
+         <div class="form-group">
+            <label class="d-block" for="cena">Cena €</label>
+            @Html.TextBoxFor(m => m.cena, new{@class="w-100"})
+        </div>
+
+        <input class="btn btn-success ml-5" type="submit" value="Kreiraj"/>
+    }
+</div>
+

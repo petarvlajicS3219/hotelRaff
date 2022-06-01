@@ -1,0 +1,62 @@
+﻿@using System.Text.Json
+@model HotelNoSql.Models.Soba;
+
+@{
+    var data = ViewData["collection"];
+}
+@{
+}
+
+
+<div class="wrapper">
+
+    <img style=" width: 100%" src="https://www.gannett-cdn.com/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg"/>
+    <div class="container">
+            @{
+                foreach (HotelNoSql.Models.Soba item in (dynamic)data)
+                {
+                    <h2 class="text-center">@item.ime</h2>
+                    <h3 class="text-center">@item.cena € (Po danu)</h3>
+                    <p> @item.opis</p>
+                    <ul class="list-group">
+                        <li class="list-group-item">MiniBar: @item.miniBar</li>
+                        <li class="list-group-item">Hrana: @item.Hrana</li>
+                    </ul>
+                    <a asp-controller="Home" asp-action="DeleteRoom" asp-route-id="@item.id" class="btn btn-danger mt-3 text-center">Obrisi sobu!</a>
+
+                    <h3>Promeni podatke o postojecoj sobi:</h3>
+    @using (Html.BeginForm("UpdateRoom", "Home", FormMethod.Post))
+    {
+            <input type="hidden" id="id" name="id" value="@item.id">
+        <div class="form-group">
+            <label class="d-block" for="ime">Ime</label>
+            <input type="text" id="ime" name="ime" value="@item.ime">
+        </div>
+        <div class="form-group">
+            <label class="d-block" for="brojKreveta">Broj Kreveta</label>
+            <input type="text" id="brojKrevet" name="brojKrevet" value="@item.brojKreveta">
+        </div>
+        <div class="form-group">
+            <label class="d-block" for="opis">Opis</label>
+            <input type="text" id="opis" name="opis" value="@item.opis">
+        </div>
+            <div class="form-group">
+            <label  for="hrana">Hrana</label>
+            <input type="checkbox" id="hrana" name="hrana" checked="@item.Hrana">
+        </div>
+        <div class="form-group">
+            <label for="minibar">MiniBar</label>
+            <input type="checkbox" id="minibar" name="minibar" checked="@item.miniBar">
+        </div>
+         <div class="form-group">
+            <label class="d-block" for="cena">Cena €</label>
+            <input type="text" id="cena" name="cena" value="@item.cena">
+        </div>
+
+        <input class="btn ml-5" type="submit" value="Submit"/>
+    }
+
+                }
+            }
+    </div>
+</div>
